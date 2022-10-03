@@ -26,7 +26,7 @@ public class AEPage {
     @FindBy(xpath = "//*[@name='name']")
     public WebElement name;
 
-    @FindBy(xpath = "//*[@name='email'])[2]")
+    @FindBy(css= "[data-qa='signup-email']")
     public WebElement email2;
 
     @FindBy(xpath = "//*[@data-qa='signup-button']")
@@ -41,19 +41,19 @@ public class AEPage {
     @FindBy(xpath = "//select[@id='days']")
     public WebElement selectDays;
 
-    @FindBy(xpath = "/select[@id='months']")
+    @FindBy(xpath = "//select[@id='months']")
     public WebElement selectMonths;
 
     @FindBy(xpath = "//select[@id='years']")
     public WebElement selectYears;
 
-    @FindBy(xpath = "//input[@type='checkbox'])[1]")
+    @FindBy(css = "input[id='newsletter']")
     public WebElement signUpNewsletter;
 
     @FindBy(xpath = "//*[@id='optin']")
     public WebElement receiveOurPartners;
 
-    @FindBy(xpath = "//*[text()='Create Account']")
+    @FindBy(css = "[data-qa='create-account']")
     public WebElement creatAccountButton;
 
     @FindBy(xpath = "//*[text()='Account Created!']")
@@ -71,21 +71,17 @@ public class AEPage {
     @FindBy(xpath = "(//*[@class='container'])[2] ")
     public WebElement accountDeleted;
 
-
-
-
     @FindBy(xpath = "//*[text()='Login to your account']")
     public WebElement loginToAccount;
 
-    @FindBy(xpath = "//*[@name='email']")
-    public WebElement email;
+    @FindBy(xpath = "(//*[@name='email'])[1]")
+    public WebElement email1;
 
-    @FindBy(css = "input[name='password']")
+    @FindBy(css="input[name='password']")
     public WebElement password;
 
-    @FindBy(css = "button[data-qa='login-button']")
+    @FindBy(css="button[data-qa='login-button']")
     public WebElement loginButton;
-
 
 
 

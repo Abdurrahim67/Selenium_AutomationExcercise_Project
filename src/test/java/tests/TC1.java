@@ -8,6 +8,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import page.AEPage;
+import utilities.ConfigReader;
 import utilities.Driver;
 
 public class TC1 {
@@ -31,50 +34,54 @@ public class TC1 {
     //18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
 
 
+
     @Test
     public void test01() throws InterruptedException {
 
-
+        SoftAssert objSoftAssert = new SoftAssert();
+        AEPage objAEpage = new AEPage();
+        //1. Launch browser
         //2. Navigate to url 'http://automationexercise.com'
-        Driver.getDriver().get("http://automationexercise.com");
+        Driver.getDriver().get(ConfigReader.getProperty("automationexcercise"));
         //3. Verify that home page is visible successfully
-        Assert.assertTrue(Driver.getDriver().findElement(By.cssSelector("[class='logo pull-left']")).isDisplayed());
+        objSoftAssert.assertTrue(objAEpage.homepageLogo.isDisplayed());
         //4. Click on 'Signup / Login' button
-        Driver.getDriver().findElement(By.xpath("//a[@href='/login']")).click();
+        objAEpage.signUpLogin.click();
         //5. Verify 'New User Signup!' is visible
-        Assert.assertTrue(Driver.getDriver().findElement(By.xpath("//*[text()='New User Signup!']")).isDisplayed());
+        objSoftAssert.assertTrue(objAEpage.newUserSignUp.isDisplayed());
         //6. Enter name and email address
-        Driver.getDriver().findElement(By.xpath("//*[@name='name']")).sendKeys("Alp");
-        Driver.getDriver().findElement(By.xpath("(//*[@name='email'])[2]")).sendKeys("alp112345789@gmail.com");
+        objAEpage.name.sendKeys(ConfigReader.getProperty("name"));
+        objAEpage.email2.sendKeys(ConfigReader.getProperty("email"));
         //7. Click 'Signup' button
-        Driver.getDriver().findElement(By.xpath("//*[@data-qa='signup-button']")).click();
+        objAEpage.signUpButton.click();
         //8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
-        Assert.assertTrue(Driver.getDriver().findElement(By.xpath("//*[text()='Enter Account Information']")).isDisplayed());
+        Assert.assertTrue(objAEpage.enterAccount.isDisplayed());
         //9. Fill details: Title, Name, Email, Password, Date of birth
         Actions actions = new Actions(Driver.getDriver());
-        Driver.getDriver().findElement(By.xpath("//input[@id='id_gender1']")).click();
-        actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).sendKeys("123abc.1").perform();
 
-        WebElement ddmDays = Driver.getDriver().findElement(By.xpath("//select[@id='days']"));
+        objAEpage.gender1.click();
+        actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).sendKeys(ConfigReader.getProperty("password")).perform();
+
+        WebElement ddmDays = objAEpage.selectDays;
         Select select = new Select(ddmDays);
         select.selectByVisibleText("5");
 
         Thread.sleep(3000);
-        WebElement ddmMonths = Driver.getDriver().findElement(By.xpath("//select[@id='months']"));
+
+        WebElement ddmMonths = objAEpage.selectMonths;
         Select select2 = new Select(ddmMonths);
         select2.selectByVisibleText("April");
+
         Thread.sleep(3000);
 
-        WebElement ddmyears = Driver.getDriver().findElement(By.xpath("//select[@id='years']"));
+        WebElement ddmyears = objAEpage.selectYears;
         Select select3 = new Select(ddmyears);
         select3.selectByVisibleText("1995");
 
-
         //10. Select checkbox 'Sign up for our newsletter!'
-        Driver.getDriver().findElement(By.xpath("(//input[@type='checkbox'])[1]")).click();
+        objAEpage.signUpNewsletter.click();
         //11. Select checkbox 'Receive special offers from our partners!'
-        Driver.getDriver().findElement(By.xpath("//*[@id='optin']")).click();
-
+        objAEpage.receiveOurPartners.click();
         //12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
         Faker faker = new Faker();
         Thread.sleep(3000);
@@ -88,27 +95,22 @@ public class TC1 {
                 .sendKeys(Keys.TAB).sendKeys(faker.address().city())
                 .sendKeys(Keys.TAB).sendKeys(faker.address().zipCode())
                 .sendKeys(Keys.TAB).sendKeys("123456").perform();
-
-
         //13. Click 'Create Account button'
-        Driver.getDriver().findElement(By.xpath("//*[text()='Create Account']")).click();
-
+        objAEpage.creatAccountButton.click();
         //14. Verify that 'ACCOUNT CREATED!' is visible
-        //1.yol
-        // Assert.assertTrue(driver.findElement(By.xpath("//*[text()='Account Created!']")).isDisplayed());
-        //2.yol
-        WebElement accountCreatedisDisplayed = Driver.getDriver().findElement(By.xpath("//*[text()='Account Created!']"));
-        Assert.assertTrue(accountCreatedisDisplayed.isDisplayed());
-
+        objSoftAssert.assertTrue(objAEpage.accountCreated.isDisplayed());
         //15. Click 'Continue' button
-        Driver.getDriver().findElement(By.xpath("//a[@class='btn btn-primary']")).click();
+        objAEpage.continueButton.click();
         //16. Verify that 'Logged in as username' is visible
-        Assert.assertTrue(Driver.getDriver().findElement(By.xpath("//*[text()=' Logged in as '] ")).isDisplayed());
+        Assert.assertTrue(objAEpage.loggedAsUsername.isDisplayed());
         //17. Click 'Delete Account' button
-        Driver.getDriver().findElement(By.xpath("(//a[@style='color:brown;'])[2]")).click();
+        objAEpage.deleteAccount.click();
         //18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
-        String container = Driver.getDriver().findElement(By.xpath("(//*[@class='container'])[2]")).getText();
-        Assert.assertFalse(container.contains("ACCOUNT DELETED!"));
+        objSoftAssert.assertFalse(objAEpage.accountDeleted.getText().contains("ACCOUNT DELETED!"),"kelime görüntülenmedi");
+
+        objSoftAssert.assertAll();
+        Driver.closeDriver();
+
 
     }
 }

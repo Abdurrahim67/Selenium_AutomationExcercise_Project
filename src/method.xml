@@ -1,12 +1,19 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="run">
-    <test name="method">
+<suite name="methodRun">
+    <test name="methodrun02">
         <classes>
-            <class name="tests.TC1">
+            <class name="tests.TC2">
                 <methods>
-                    <include name="test01"/>
+                    <include name="login">
+
+                    </include>
                 </methods>
+
             </class>
+
         </classes>
+
     </test>
+
+
 </suite>

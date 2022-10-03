@@ -18,34 +18,38 @@ public class TC2 {
     //9. Click 'Delete Account' button
     //10. Verify that 'ACCOUNT DELETED!' is visible
 
+    SoftAssert objSoftAssert = new SoftAssert();
+    AEPage objAEpage = new AEPage();
 
     @Test
-    public void test01() {
+    public void login() {
+
+
         //2. Navigate to url 'http://automationexercise.com'
-        Driver.getDriver().get(ConfigReader.getProperty("automationExcercise"));
-
-        AEPage aePage = new AEPage();
-        SoftAssert softAssert = new SoftAssert();
+        Driver.getDriver().get(ConfigReader.getProperty("automationexcercise"));
         //3. Verify that home page is visible successfully
-        softAssert.assertTrue(aePage.homepageLogo.isDisplayed());
+        objSoftAssert.assertTrue(objAEpage.homepageLogo.isDisplayed());
         //4. Click on 'Signup / Login' button
-        aePage.signUpLogin.click();
+        objAEpage.signUpLogin.click();
         //5. Verify 'Login to your account' is visible
-        softAssert.assertTrue(aePage.loginToAccount.isDisplayed());
+        objSoftAssert.assertTrue(objAEpage.loginToAccount.isDisplayed());
         //6. Enter correct email address and password
-        aePage.email.sendKeys(ConfigReader.getProperty("email"));
-        aePage.password.sendKeys(ConfigReader.getProperty("password"));
+        objAEpage.email1.sendKeys(ConfigReader.getProperty("email"));
+        objAEpage.password.sendKeys(ConfigReader.getProperty("password"));
         //7. Click 'login' button
-        aePage.loginButton.click();
+        objAEpage.loginButton.click();
         //8. Verify that 'Logged in as username' is visible
-        softAssert.assertTrue(aePage.loggedAsUsername.isDisplayed());
+        objSoftAssert.assertTrue(objAEpage.loggedAsUsername.isDisplayed());
         //9. Click 'Delete Account' button
-        aePage.deleteAccount.click();
+        objAEpage.deleteAccount.click();
         //10. Verify that 'ACCOUNT DELETED!' is visible
-        softAssert.assertFalse(aePage.accountDeleted.getText().contains("ACCOUNT DELETED!"), "ACCOUNT DELETED ->goruntulenmedi");
+        objSoftAssert.assertFalse(objAEpage.accountDeleted.getText().contains("ACCOUNT DELETED!"),"kelime görüntülenmedi");
 
-        softAssert.assertAll();
+        objSoftAssert.assertAll();
+        Driver.closeDriver();
 
 
     }
+
+
 }
