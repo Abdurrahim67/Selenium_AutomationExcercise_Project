@@ -83,6 +83,9 @@ public class AEPage {
     @FindBy(css="button[data-qa='login-button']")
     public WebElement loginButton;
 
+    @FindBy(xpath = "//*[text()='Your email or password is incorrect!']")
+    public WebElement yourEmailIncorrect;
+
 
 
 
